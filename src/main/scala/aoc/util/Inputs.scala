@@ -3,7 +3,14 @@ package aoc.util
 import scala.io.Source
 
 object Inputs {
-  def filename(day: String) = {
+  def string(day: "02"): String = {
+    val source = Source.fromResource(filename(day))
+    val res = source.getLines.next()
+    source.close
+    res
+  }
+
+  def filename(day: String): String = {
     s"input/${day}.txt"
   }
 
