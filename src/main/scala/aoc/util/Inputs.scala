@@ -3,9 +3,16 @@ package aoc.util
 import scala.io.Source
 
 object Inputs {
-  def string(day: "02"): String = {
+  def string(day: String): String = {
     val source = Source.fromResource(filename(day))
     val res = source.getLines.next()
+    source.close
+    res
+  }
+
+  def strings(day: String): Seq[String] = {
+    val source = Source.fromResource(filename(day))
+    val res = source.getLines.toSeq
     source.close
     res
   }
