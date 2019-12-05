@@ -1,5 +1,7 @@
 package aoc
 
+import aoc.util.Intcode
+
 object Day02 {
   def second(program: String): Int = {
     for (noun <- 0 to 99) {
@@ -15,28 +17,7 @@ object Day02 {
     val cells = program.split(',').map(_.toInt)
     cells(1) = noun
     cells(2) = verb
-    val result = execute(cells)
+    val result = new Intcode().execute(cells)
     result(0)
-  }
-
-  def execute(cells: Array[Int]): Array[Int] = {
-    var pc = 0
-
-    while (pc < cells.length) {
-      val instr = cells(pc)
-
-      if (instr == 99)
-        return cells
-
-      val a = cells(cells(pc + 1))
-      val b = cells(cells(pc + 2))
-      val resultCell = cells(pc + 3)
-
-      val result = if (instr == 1) a + b else a * b
-      cells(resultCell) = result
-      pc += 4
-    }
-
-    cells
   }
 }
