@@ -17,7 +17,8 @@ object Day02 {
     val cells = program.split(',').map(_.toInt)
     cells(1) = noun
     cells(2) = verb
-    val result = new Intcode().execute(cells)
-    result(0)
+    val computer = new Intcode(cells)
+    computer.execute()
+    computer.memory(0)
   }
 }

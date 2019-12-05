@@ -10,8 +10,8 @@ object Day05 {
   private def execute(program: String, system: Int): Array[Int] = {
     val cells = program.split(',').map(_.toInt)
     val input = Seq(system)
-    val computer = new Intcode
-    computer.execute(cells, input.iterator)
+    val computer = new Intcode(cells)
+    computer.execute(input.iterator)
     computer.output
   }
 
