@@ -1,6 +1,5 @@
 package aoc
 
-import aoc.util.Intcode
 import org.scalatest.FunSuite
 
 class Day06Test extends FunSuite {

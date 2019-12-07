@@ -112,9 +112,10 @@ class Day05Test extends FunSuite {
     val input = Seq(7, 8, 9)
     val inputIterator = input.iterator
     computer.execute(inputIterator)
+    assert(computer.output.last === 999)
     computer.execute(inputIterator)
+    assert(computer.output.last === 1000)
     computer.execute(inputIterator)
-
-    assert(computer.output === Array(999, 1000, 1001))
+    assert(computer.output.last === 1001)
   }
 }

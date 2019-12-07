@@ -1,11 +1,20 @@
 package aoc.util
 
+class NoInput extends Exception {}
+
 class Intcode(var memory: Array[Int]) {
   var output: Array[Int] = Array()
+  var halted: Boolean = false
   private var pc: Int = 0
 
-  def execute(input: Iterator[Int] = Iterator()): Unit = {
-    pc = 0
+  def execute(input: Iterator[Int] = Iterator(), reset: Boolean = true): Unit = {
+    if (reset) {
+      pc = 0
+      halted = false
+      output = Array()
+    }
+    else if (!reset && halted)
+      throw new Exception
 
     while (pc < memory.length) {
       val instr = memory(pc)
@@ -19,7 +28,10 @@ class Intcode(var memory: Array[Int]) {
         case 6 => jumpZero()
         case 7 => lessThan()
         case 8 => equalTo()
-        case _ => return
+        case _ => {
+          halted = true
+          return
+        }
       }
     }
   }
@@ -86,6 +98,9 @@ class Intcode(var memory: Array[Int]) {
 
   private def inputValue(input: Iterator[Int]): Unit = {
     val resultCell = memory(pc + 1)
+
+    if (!input.hasNext)
+      throw new NoInput
     memory(resultCell) = input.next()
 
     pc += 2
