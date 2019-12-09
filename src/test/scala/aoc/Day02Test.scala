@@ -3,10 +3,10 @@ import aoc.util.Intcode
 import org.scalatest.FunSuite
 
 class Day02Test extends FunSuite {
-  private def execute(program: Array[Int]) : Array[Int] = {
-    val computer = new Intcode(program)
+  private def execute(program: Array[Int]) : Array[Long] = {
+    val computer = new Intcode(program.map(_.toLong))
     computer.execute()
-    computer.memory
+    computer.rawMemory
   }
 
   test("Day02.execute") {

@@ -13,12 +13,12 @@ object Day02 {
     throw new Exception
   }
 
-  def first(program: String, noun: Int = 12, verb: Int = 2): Int = {
-    val cells = program.split(',').map(_.toInt)
+  def first(program: String, noun: Int = 12, verb: Int = 2): Long = {
+    val cells = program.split(',').map(_.toLong)
     cells(1) = noun
     cells(2) = verb
     val computer = new Intcode(cells)
     computer.execute()
-    computer.memory(0)
+    computer.rawMemory(0)
   }
 }
