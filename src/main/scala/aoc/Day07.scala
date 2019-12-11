@@ -1,6 +1,6 @@
 package aoc
 
-import aoc.util.{Intcode, NoInput}
+import aoc.util.Intcode
 
 object Day07 {
   def first(programStr: String): Long = {
@@ -24,21 +24,13 @@ object Day07 {
   }
 
   def emulateWithFeedback(program: Array[Long], phases: Seq[Int]): Long = {
-    def executeOnce(amplifier: Intcode, input: Seq[Long]): Unit = {
-      try {
-        amplifier.execute(input.iterator, reset = false)
-      } catch {
-        case _: NoInput => ;
-      }
-    }
-
     val amplifiers = phases.map(_ => new Intcode(program.clone))
-    (amplifiers zip phases).foreach(p => executeOnce(p._1, Seq(p._2)))
+    (amplifiers zip phases).foreach(p => p._1.executeAndWaitForInput(Seq(p._2.toLong).iterator))
 
     var signal = 0L
     while (!amplifiers.last.halted) {
       for (amp <- amplifiers) {
-        executeOnce(amp, Seq(signal))
+        amp.executeAndWaitForInput(Seq(signal).iterator)
         signal = amp.output.last
       }
     }

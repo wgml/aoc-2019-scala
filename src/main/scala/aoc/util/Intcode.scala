@@ -16,7 +16,7 @@ class Intcode(var rawMemory: Array[Long]) {
       output = Array()
     }
     else if (!reset && halted)
-      throw new Exception
+      throw new Exception("Did not reset halted computer")
 
     while (pc < rawMemory.length) {
       val instr = memory(pc)
@@ -35,6 +35,15 @@ class Intcode(var rawMemory: Array[Long]) {
           halted = true
           return
       }
+    }
+    throw new Exception("Shouldn't be here")
+  }
+
+  def executeAndWaitForInput(input: Iterator[Long]): Unit = {
+    try {
+      execute(input.iterator, reset = false)
+    } catch {
+      case _: NoInput => ;
     }
   }
 
