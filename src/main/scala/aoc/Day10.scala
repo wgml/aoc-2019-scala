@@ -24,15 +24,12 @@ object Day10 {
   }
 
   private def calculateReachable(map: Array[Array[Boolean]], x: Int, y: Int): Set[(Int, Int)] = {
-    @scala.annotation.tailrec
-    def gcd(a: Int, b: Int): Int = if (b == 0) a else gcd(b, a % b)
-
     (map(0).indices cross map.indices)
       .filter(p => map(p._2)(p._1) && (p._1 != x || p._2 != y))
       .map(p => {
         val dx = p._1 - x
         val dy = p._2 - y
-        val divisor = gcd(dx.abs, dy.abs)
+        val divisor = util.Math.gcd(dx.abs, dy.abs).toInt
         (dx / divisor, dy / divisor)
       })
       .toSet
