@@ -8,6 +8,10 @@ class Intcode(var rawMemory: Array[Long]) {
   private var pc: Int = 0
   private var base: Int = 0
 
+  def clearOutput(): Unit = {
+    output = Array()
+  }
+
   def execute(input: Iterator[Long] = Iterator(), reset: Boolean = true): Unit = {
     if (reset) {
       pc = 0
@@ -47,6 +51,16 @@ class Intcode(var rawMemory: Array[Long]) {
     }
   }
 
+  def withMemoryOverride(address: Int, value: Long): Unit = {
+    if (address >= rawMemory.length)
+      resizeMemory(address)
+    rawMemory(address) = value
+  }
+
+  private def resizeMemory(address: Int): Unit = {
+    rawMemory = (0 to address).map(a => if (a < rawMemory.length) rawMemory(a) else 0).toArray
+  }
+
   private def memory(address: Int): Long = {
     if (address >= rawMemory.length)
       resizeMemory(address)
@@ -74,10 +88,6 @@ class Intcode(var rawMemory: Array[Long]) {
       case 1 => memory(pc + offset)
       case 2 => memory(memory(pc + offset).toInt + base)
     }
-  }
-
-  private def resizeMemory(address: Int): Unit = {
-    rawMemory = (0 to address).map(a => if (a < rawMemory.length) rawMemory(a) else 0).toArray
   }
 
   private def equalTo(): Unit = {
