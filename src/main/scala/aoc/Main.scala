@@ -81,4 +81,10 @@ object Main extends App {
     println(s"first=${Day13.first(input)}")
     println(s"second=${Day13.second(input)}")
   }
+  {
+    val input = Inputs.strings("14")
+    println("Day14")
+    println(s"first=${Day14.first(input)}")
+    println(s"second=${Day14.second(input)}")
+  }
 }
