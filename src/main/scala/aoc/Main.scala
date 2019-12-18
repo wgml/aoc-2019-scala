@@ -3,6 +3,8 @@ package aoc
 import aoc.util.Inputs
 
 object Main extends App {
+  val calcExpensive = false
+
   {
     val input = Inputs.ints("01")
     println("Day01")
@@ -104,5 +106,11 @@ object Main extends App {
     println("Day17")
     println(s"first=${Day17.first(input)}")
     println(s"second=${Day17.second(input)}")
+  }
+  if (calcExpensive) {
+    val input = Inputs.strings("18")
+    println("Day18")
+    println(s"first=${Day18.first(input)}")
+    println(s"second=${Day18.second(input)}")
   }
 }
